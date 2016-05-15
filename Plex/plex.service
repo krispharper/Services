@@ -1,0 +1,23 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=Plex
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=on-failure
+RestartSec=2
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill plex
+ExecStartPre=-/usr/bin/docker rm plex
+ExecStartPre=/usr/bin/docker pull krispharper/plex:latest
+ExecStart=/usr/bin/docker run \
+	--name plex \
+	--rm \
+	-p 32400:32400 \
+	-v /data/plex:/plex \
+	-v /media/Poseidon:/media \
+	krispharper/plex:latest
+ExecStop=/usr/bin/docker stop plex

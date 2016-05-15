@@ -1,0 +1,24 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=CrashPlan
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=on-failure
+RestartSec=2
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill crashplan
+ExecStartPre=-/usr/bin/docker rm crashplan
+ExecStartPre=/usr/bin/docker pull jrcs/crashplan:latest
+ExecStart=/usr/bin/docker run \
+	--name crashplan \
+	--rm \
+	-p 4242:4242 \
+	-p 4243:4243 \
+	-v /media/Poseidon:/storage \
+	-v /var/lib/crashplan:/var/crashplan \
+	jrcs/crashplan:latest
+ExecStop=/usr/bin/docker stop crasplan

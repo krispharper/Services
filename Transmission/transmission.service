@@ -1,0 +1,26 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=Transmission
+After=docker.service
+Requires=docker.service
+After=vpn.service
+BindsTo=vpn.service
+
+[Service]
+Restart=on-failure
+RestartSec=2
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill transmission
+ExecStartPre=-/usr/bin/docker rm transmission
+ExecStartPre=/usr/bin/docker pull krispharper/transmission
+ExecStart=/usr/bin/docker run \
+	--name transmission \
+	--rm \
+	--net=container:vpn \
+	-v /var/lib/transmission:/transmission/info \
+	-v /media/Poseidon/Downloads/Transmission:/transmission/downloads \
+	-e GROUPID=100 \
+	krispharper/transmission
+ExecStop=/usr/bin/docker stop transmission

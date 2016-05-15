@@ -1,0 +1,28 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=VPN
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=on-failure
+RestartSec=2
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill vpn
+ExecStartPre=-/usr/bin/docker rm vpn
+ExecStartPre=/usr/bin/docker pull dperson/openvpn-client
+ExecStart=/usr/bin/docker run \
+	--name vpn \
+	--rm \
+	--cap-add=NET_ADMIN \
+	--dns 8.8.8.8 \
+	--dns 8.8.4.4 \
+	--device /dev/net/tun \
+	-e VPN_USERNAME=${VPN_USERNAME} \
+	-e VPN_PASSWORD=${VPN_PASSWORD} \
+	-v /etc/ssl/certs/pia.crt:/vpn/vpn-ca.crt \
+	dperson/openvpn-client \
+	-v 'nl.privateinternetaccess.com;$VPN_USERNAME;$VPN_PASSWORD'
+ExecStop=/usr/bin/docker stop vpn
