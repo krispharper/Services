@@ -21,6 +21,7 @@ ExecStart=/usr/bin/docker run \
 	--net=container:vpn \
 	-v /var/lib/transmission:/transmission/info \
 	-v /media/Poseidon/Downloads/Transmission:/transmission/downloads \
+	-e GROUPID=1026 \
 	-e GROUPID=100 \
 	krispharper/transmission
 ExecStop=/usr/bin/docker stop transmission
