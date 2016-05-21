@@ -16,9 +16,11 @@ ExecStartPre=/usr/bin/docker pull jrcs/crashplan:latest
 ExecStart=/usr/bin/docker run \
 	--name crashplan \
 	--rm \
+	--log-opt max-size=4G \
 	-p 4242:4242 \
 	-p 4243:4243 \
 	-v /media/Poseidon:/storage \
-	-v /var/lib/crashplan:/var/crashplan \
+	-v /data/crashplan/app:/var/crashplan \
+	-v /data/crashplan/run.conf:/usr/local/crashplan/bin/run.conf \
 	jrcs/crashplan:latest
 ExecStop=/usr/bin/docker stop crasplan
