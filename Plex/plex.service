@@ -7,17 +7,31 @@ After=docker.service
 Requires=docker.service
 
 [Service]
+EnvironmentFile=/etc/environment
 Restart=on-failure
 RestartSec=2
 TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill plex
 ExecStartPre=-/usr/bin/docker rm plex
-ExecStartPre=/usr/bin/docker pull krispharper/plex:latest
+ExecStartPre=/usr/bin/docker pull plexinc/pms-docker:plexpass
+ExecStartPre=-/bin/rm "/data/plex/Library/Application Support/Plex Media Server/plexmediaserver.pid"
 ExecStart=/usr/bin/docker run \
 	--name plex \
 	--rm \
-	-p 32400:32400 \
-	-v /data/plex:/plex \
-	-v /media/Poseidon:/media \
-	krispharper/plex:latest
+	-e TZ="America/New_York" \
+	-e PLEX_CLAIM=${PLEX_CLAIM} \
+	-e ADVERTISE_IP="http://192.168.1.102:32400/" \
+	-e PLEX_UID=1026 \
+	-e PLEX_GID=1000 \
+	-h plex-server \
+	-p 32400:32400/tcp \
+	-p 1900:1900/udp \
+	-p 32410:32410/udp \
+	-p 32412:32412/udp \
+	-p 32413:32413/udp \
+	-p 32414:32414/udp \
+	-p 32469:32469/tcp \
+	-v /data/plex:/config \
+	-v /media/Poseidon:/data \
+	plexinc/pms-docker:plexpass
 ExecStop=/usr/bin/docker stop plex
