@@ -1,0 +1,26 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=PlexPy
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=on-failure
+RestartSec=2
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill plexpy
+ExecStartPre=-/usr/bin/docker rm plexpy
+ExecStartPre=/usr/bin/docker pull linuxserver/plexpy
+ExecStart=/usr/bin/docker run \
+	--name plexpy \
+	--rm \
+	-e TZ="America/New_York" \
+	-e PUID=1026 \
+	-e PGID=1000 \
+	-p 8181:8181 \
+	-v /data/plexpy:/config \
+	-v /data/plex/Library/Application\ Support/Plex\ Media\ Server/Logs:/logs:ro \
+	linuxserver/plexpy
+ExecStop=/usr/bin/docker stop plexpy
