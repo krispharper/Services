@@ -24,6 +24,6 @@ ExecStart=/usr/bin/docker run \
 	-e VPN_USERNAME=${VPN_USERNAME} \
 	-e VPN_PASSWORD=${VPN_PASSWORD} \
 	-v /etc/ssl/certs/pia.crt:/vpn/vpn-ca.crt \
-	dperson/openvpn-client \
-	-v "nl.privateinternetaccess.com;$VPN_USERNAME;$VPN_PASSWORD;1194"
+	krispharper/openvpn-client \
+	-v "nl.privateinternetaccess.com;$VPN_USERNAME;$VPN_PASSWORD;1198"
 ExecStop=/usr/bin/docker stop vpn
