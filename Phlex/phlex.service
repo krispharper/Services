@@ -1,0 +1,24 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=Phlex
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=on-failure
+RestartSec=2
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill phlex
+ExecStartPre=-/usr/bin/docker rm phlex
+ExecStartPre=/usr/bin/docker pull digitalhigh/phlex
+ExecStart=/usr/bin/docker run \
+	--name phlex \
+	--rm \
+	-e TZ="America/New_York" \
+	-p 5666:5666/tcp \
+    -p 9000:9000/udp \
+	-v /data/phlex:/config \
+	digitalhigh/phlex
+ExecStop=/usr/bin/docker stop phlex
