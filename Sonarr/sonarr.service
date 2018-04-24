@@ -1,0 +1,29 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=Sonarr
+After=docker.service
+Requires=docker.service
+After=vpn.service
+BindsTo=vpn.service
+
+[Service]
+Restart=on-failure
+RestartSec=2
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill sonarr
+ExecStartPre=-/usr/bin/docker rm sonarr
+ExecStartPre=/usr/bin/docker pull linuxserver/sonarr
+ExecStart=/usr/bin/docker run \
+	--name sonarr \
+	--rm \
+	--net=container:vpn \
+	-e PUID=1000 \
+	-e PGID=100 \
+	-v /etc/localtime:/etc/localtime:ro \
+	-v /data/sonarr:/config \
+	-v "/media/Poseidon/Downloads/Temporary Media/TV Shows":/tv \
+	-v /media/Poseidon/Downloads/Transmission:/downloads \
+	linuxserver/sonarr
+ExecStop=/usr/bin/docker stop sonarr
