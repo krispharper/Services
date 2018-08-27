@@ -9,7 +9,7 @@ After=vpn.service
 BindsTo=vpn.service
 
 [Service]
-Restart=on-failure
+Restart=always
 RestartSec=2
 TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill sonarr
