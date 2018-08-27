@@ -17,9 +17,12 @@ ExecStart=/usr/bin/docker run \
 	--name nginx \
 	--rm \
 	--link vpn:transmission \
+	--link vpn:sonarr \
+	--link jackett:jackett \
 	-p 80:80 \
 	-p 443:443 \
 	dperson/nginx \
 	-w "http://transmission:9091;/transmission" \
-	-w "http://192.168.1.101:5000;/nas"
+	-w "http://sonarr:8989;/" \
+	-w "http://jackett:9117;/jackett"
 ExecStop=/usr/bin/docker stop nginx

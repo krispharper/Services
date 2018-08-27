@@ -1,0 +1,26 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=Jackett
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=2
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill jackett
+ExecStartPre=-/usr/bin/docker rm jackett
+ExecStartPre=/usr/bin/docker pull linuxserver/jackett
+ExecStart=/usr/bin/docker run \
+	--name jackett \
+	--rm \
+	-e PUID=1000 \
+	-e PGID=100 \
+	-v /etc/localtime:/etc/localtime:ro \
+	-v /data/jackett:/config \
+	-v /data/transmission/torrents:/downloads \
+	-p 9117:9117 \
+	linuxserver/jackett
+ExecStop=/usr/bin/docker stop jackett
