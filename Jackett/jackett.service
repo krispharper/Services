@@ -16,7 +16,7 @@ ExecStartPre=/usr/bin/docker pull linuxserver/jackett
 ExecStart=/usr/bin/docker run \
 	--name jackett \
 	--rm \
-	-e PUID=1000 \
+	-e PUID=1026 \
 	-e PGID=100 \
 	-v /etc/localtime:/etc/localtime:ro \
 	-v /data/jackett:/config \
