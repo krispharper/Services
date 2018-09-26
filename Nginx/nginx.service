@@ -18,6 +18,7 @@ ExecStart=/usr/bin/docker run \
 	--rm \
 	--link vpn:transmission \
 	--link vpn:sonarr \
+	--link vpn:radarr \
 	--link jackett:jackett \
 	-p 80:80 \
 	-p 443:443 \

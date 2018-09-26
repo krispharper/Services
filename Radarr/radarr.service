@@ -1,0 +1,29 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=Radarr
+After=docker.service
+Requires=docker.service
+After=vpn.service
+BindsTo=vpn.service
+
+[Service]
+Restart=always
+RestartSec=2
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill radarr
+ExecStartPre=-/usr/bin/docker rm radarr
+ExecStartPre=/usr/bin/docker pull linuxserver/radarr:128
+ExecStart=/usr/bin/docker run \
+	--name radarr \
+	--rm \
+	--net=container:vpn \
+	-e PUID=1026 \
+	-e PGID=100 \
+	-v /etc/localtime:/etc/localtime:ro \
+	-v /data/radarr:/config \
+	-v /media/Poseidon/Movies:/movies \
+	-v /media/Poseidon/Downloads/Incomplete:/downloads \
+	linuxserver/radarr:128
+ExecStop=/usr/bin/docker stop radarr
