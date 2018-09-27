@@ -14,7 +14,7 @@ RestartSec=2
 TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill sonarr
 ExecStartPre=-/usr/bin/docker rm sonarr
-ExecStartPre=/usr/bin/docker pull linuxserver/sonarr
+ExecStartPre=/usr/bin/docker pull linuxserver/sonarr:154
 ExecStart=/usr/bin/docker run \
 	--name sonarr \
 	--rm \
@@ -25,5 +25,5 @@ ExecStart=/usr/bin/docker run \
 	-v /data/sonarr:/config \
 	-v "/media/Poseidon/Downloads/Temporary Media/TV Shows":/tv \
 	-v /media/Poseidon/Downloads/Incomplete:/downloads \
-	linuxserver/sonarr
+	linuxserver/sonarr:154
 ExecStop=/usr/bin/docker stop sonarr
