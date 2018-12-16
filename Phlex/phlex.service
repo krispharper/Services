@@ -17,8 +17,10 @@ ExecStart=/usr/bin/docker run \
 	--name phlex \
 	--rm \
 	-e TZ="America/New_York" \
+    -e PUID=1026 \
+    -e PGID=100 \
 	-p 5666:5666/tcp \
     -p 9000:9000/udp \
-	-v /data/phlex:/config \
+	-v /media/Poseidon/Data/phlex:/config \
 	digitalhigh/phlex
 ExecStop=/usr/bin/docker stop phlex

@@ -20,7 +20,7 @@ ExecStart=/usr/bin/docker run \
 	-p 4242:4242 \
 	-p 4243:4243 \
 	-v /media/Poseidon:/storage \
-	-v /data/crashplan/app:/var/crashplan \
-	-v /data/crashplan/run.conf:/usr/local/crashplan/bin/run.conf \
+	-v /media/Poseidon/Data/crashplan/app:/var/crashplan \
+	-v /media/Poseidon/Data/crashplan/run.conf:/usr/local/crashplan/bin/run.conf \
 	jrcs/crashplan:latest
 ExecStop=/usr/bin/docker stop crasplan

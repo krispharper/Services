@@ -19,8 +19,8 @@ ExecStart=/usr/bin/docker run \
 	-e PUID=1026 \
 	-e PGID=100 \
 	-v /etc/localtime:/etc/localtime:ro \
-	-v /data/jackett:/config \
-	-v /data/transmission/torrents:/downloads \
+	-v /media/Poseidon/Data/jackett:/config \
+	-v /media/Poseidon/Data/transmission/torrents:/downloads \
 	-p 9117:9117 \
 	linuxserver/jackett
 ExecStop=/usr/bin/docker stop jackett

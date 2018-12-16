@@ -14,7 +14,7 @@ TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill plex
 ExecStartPre=-/usr/bin/docker rm plex
 ExecStartPre=/usr/bin/docker pull plexinc/pms-docker:plexpass
-ExecStartPre=-/bin/rm "/data/plex/Library/Application Support/Plex Media Server/plexmediaserver.pid"
+ExecStartPre=-/bin/rm "/media/Poseidon/Data/plex/Library/Application Support/Plex Media Server/plexmediaserver.pid"
 ExecStart=/usr/bin/docker run \
 	--name plex \
 	--rm \
@@ -31,7 +31,7 @@ ExecStart=/usr/bin/docker run \
 	-p 32413:32413/udp \
 	-p 32414:32414/udp \
 	-p 32469:32469/tcp \
-	-v /data/plex:/config \
-	-v /media/Poseidon:/data \
+	-v /media/Poseidon/Data/plex:/config \
+	-v /media/Poseidon:/media \
 	plexinc/pms-docker:plexpass
 ExecStop=/usr/bin/docker stop plex

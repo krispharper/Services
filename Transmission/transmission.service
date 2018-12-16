@@ -19,7 +19,7 @@ ExecStart=/usr/bin/docker run \
 	--name transmission \
 	--rm \
 	--net=container:vpn \
-	-v /data/transmission:/transmission/info \
+	-v /media/Poseidon/Data/transmission:/transmission/info \
 	-v /media/Poseidon/Downloads/Transmission:/transmission/downloads \
 	-v /media/Poseidon/Downloads/Incomplete:/transmission/incomplete \
 	-e USERID=1026 \

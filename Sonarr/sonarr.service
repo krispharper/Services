@@ -22,7 +22,7 @@ ExecStart=/usr/bin/docker run \
 	-e PUID=1026 \
 	-e PGID=100 \
 	-v /etc/localtime:/etc/localtime:ro \
-	-v /data/sonarr:/config \
+	-v /media/Poseidon/Data/sonarr:/config \
 	-v "/media/Poseidon/Downloads/Temporary Media/TV Shows":/tv \
 	-v /media/Poseidon/Downloads/Incomplete:/downloads \
 	linuxserver/sonarr:154
