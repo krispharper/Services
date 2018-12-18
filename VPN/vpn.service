@@ -13,7 +13,7 @@ TimeoutStartSec=0
 EnvironmentFile=/etc/environment
 ExecStartPre=-/usr/bin/docker kill vpn
 ExecStartPre=-/usr/bin/docker rm vpn
-ExecStartPre=/usr/bin/docker pull dperson/openvpn-client
+ExecStartPre=/usr/bin/docker pull krispharper/openvpn-client
 ExecStart=/usr/bin/docker run \
 	--name vpn \
 	--rm \
