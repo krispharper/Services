@@ -17,8 +17,7 @@ ExecStart=/usr/bin/docker run \
 	--name crashplan \
 	--rm \
 	--log-opt max-size=4G \
-	-p 4242:4242 \
-	-p 4243:4243 \
+	-p 4242-4244:4242-4244 \
 	-v /media/Poseidon:/storage \
 	-v /media/Poseidon/Data/crashplan/app:/var/crashplan \
 	-v /media/Poseidon/Data/crashplan/run.conf:/usr/local/crashplan/bin/run.conf \
