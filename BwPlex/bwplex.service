@@ -1,0 +1,24 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=BwPlex
+After=docker.service
+Requires=docker.service
+
+[Service]
+EnvironmentFile=/etc/environment
+Restart=on-failure
+RestartSec=2
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill bwplex
+ExecStartPre=-/usr/bin/docker rm bwplex
+ExecStartPre=/usr/bin/docker pull hellowlol/bw_plex
+ExecStart=/usr/bin/docker run \
+	--name bwplex \
+	--rm \
+    -e url=https://plex.krispharper.com \
+    -e token=${PLEX_X_TOKEN} \
+	-v /media/Poseidon/Data/bwplex:/config \
+	hellowlol/bw_plex
+ExecStop=/usr/bin/docker stop bwplex
