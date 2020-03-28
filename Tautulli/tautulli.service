@@ -2,7 +2,7 @@
 WantedBy=multi-user.target
 
 [Unit]
-Description=PlexPy
+Description=Tautulli
 After=docker.service
 Requires=docker.service
 
@@ -10,17 +10,17 @@ Requires=docker.service
 Restart=on-failure
 RestartSec=2
 TimeoutStartSec=0
-ExecStartPre=-/usr/bin/docker kill plexpy
-ExecStartPre=-/usr/bin/docker rm plexpy
-ExecStartPre=/usr/bin/docker pull linuxserver/plexpy
+ExecStartPre=-/usr/bin/docker kill tautulli
+ExecStartPre=-/usr/bin/docker rm tautulli
+ExecStartPre=/usr/bin/docker pull tautulli/tautulli
 ExecStart=/usr/bin/docker run \
-	--name plexpy \
+	--name tautulli \
 	--rm \
 	-e TZ="America/New_York" \
 	-e PUID=1026 \
 	-e PGID=1000 \
 	-p 8181:8181 \
-	-v /media/Poseidon/Data/plexpy:/config \
+	-v /media/Poseidon/Data/tautulli:/config \
 	-v /media/Poseidon/Data/plex/Library/Application\ Support/Plex\ Media\ Server/Logs:/logs:ro \
-	linuxserver/plexpy
-ExecStop=/usr/bin/docker stop plexpy
+	tautulli/tautulli
+ExecStop=/usr/bin/docker stop tautulli
