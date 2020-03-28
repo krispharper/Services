@@ -12,14 +12,16 @@ RestartSec=2
 TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill crashplan
 ExecStartPre=-/usr/bin/docker rm crashplan
-ExecStartPre=/usr/bin/docker pull jrcs/crashplan:latest
+ExecStartPre=/usr/bin/docker pull jlesage/crashplan-pro:latest
 ExecStart=/usr/bin/docker run \
 	--name crashplan \
 	--rm \
 	--log-opt max-size=4G \
-	-p 4242-4244:4242-4244 \
-	-v /media/Poseidon:/storage \
-	-v /media/Poseidon/Data/crashplan/app:/var/crashplan \
-	-v /media/Poseidon/Data/crashplan/run.conf:/usr/local/crashplan/bin/run.conf \
-	jrcs/crashplan:latest
-ExecStop=/usr/bin/docker stop crasplan
+	-p 5800:5800 \
+    -e USER_ID=1026 \
+	-e TZ="America/New_York" \
+    -e CRASHPLAN_SRV_MAX_MEM=6144m \
+	-v /media/Poseidon:/storage:ro \
+	-v /media/Poseidon/Data/crashplan:/config \
+	jlesage/crashplan-pro:latest
+ExecStop=/usr/bin/docker stop crashplan
