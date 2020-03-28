@@ -17,7 +17,7 @@ ExecStartPre=/usr/bin/docker pull hellowlol/bw_plex
 ExecStart=/usr/bin/docker run \
 	--name bwplex \
 	--rm \
-    -e url=https://plex.krispharper.com \
+    -e url=http://192.168.1.102:32400 \
     -e token=${PLEX_X_TOKEN} \
 	-v /media/Poseidon/Data/bwplex:/config \
 	hellowlol/bw_plex
