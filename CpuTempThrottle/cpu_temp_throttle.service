@@ -1,0 +1,24 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=CPU Temp Throttle
+After=docker.service
+Requires=docker.service
+After=vpn.service
+BindsTo=vpn.service
+
+[Service]
+Restart=always
+RestartSec=10
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill cpu-temp-throttle
+ExecStartPre=-/usr/bin/docker rm cpu-temp-throttle
+ExecStartPre=/usr/bin/docker pull krispharper/cpu-temp-throttle:latest
+ExecStart=/usr/bin/docker run \
+	--name cpu-temp-throttle \
+	--rm \
+	--privileged \
+	-v /sys:/sys \
+	krispharper/cpu-temp-throttle
+ExecStop=/usr/bin/docker stop cpu-temp-throttle
