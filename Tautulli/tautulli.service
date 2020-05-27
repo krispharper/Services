@@ -21,6 +21,6 @@ ExecStart=/usr/bin/docker run \
 	-e PGID=1000 \
 	-p 8181:8181 \
 	-v /media/Poseidon/Data/tautulli:/config \
-	-v /media/Poseidon/Data/plex/Library/Application\ Support/Plex\ Media\ Server/Logs:/logs:ro \
+	-v /data/plex/Library/Application\ Support/Plex\ Media\ Server/Logs:/logs:ro \
 	tautulli/tautulli
 ExecStop=/usr/bin/docker stop tautulli
