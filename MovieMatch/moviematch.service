@@ -1,0 +1,24 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=MovieMatch
+After=docker.service
+Requires=docker.service
+
+[Service]
+EnvironmentFile=/etc/environment
+Restart=on-failure
+RestartSec=2
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill moviematch
+ExecStartPre=-/usr/bin/docker rm moviematch
+ExecStartPre=/usr/bin/docker pull lukechannings/moviematch
+ExecStart=/usr/bin/docker run \
+	--name moviematch \
+	--rm \
+    -e PLEX_URL=http://192.168.1.102:32400 \
+    -e PLEX_TOKEN=${PLEX_X_TOKEN} \
+    -p 9000:8000 \
+	lukechannings/moviematch
+ExecStop=/usr/bin/docker stop moviematch
