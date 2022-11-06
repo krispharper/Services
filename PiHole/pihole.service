@@ -1,0 +1,30 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=Pi-hole
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=on-failure
+RestartSec=2
+TimeoutStartSec=0
+EnvironmentFile=/etc/environment
+ExecStartPre=-/usr/bin/docker kill pihole
+ExecStartPre=-/usr/bin/docker rm pihole
+ExecStartPre=/usr/bin/docker pull pihole/pihole:latest
+
+ExecStart=/usr/bin/docker run \
+	--name pihole \
+	--rm \
+	-e TZ="America/Chicago" \
+    -e WEBPASSWORD=${PI_HOLE_PASSWORD} \
+	-h pihole \
+	-p 53:53/tcp \
+	-p 53:53/udp \
+	-p 8080:80/tcp \
+	-v /media/Poseidon/Data/pihole/etc-pihole:/etc/pihole \
+	-v /media/Poseidon/Data/pihole/etc-dnsmasq.d:/etc/dnsmasq.d \
+	pihole/pihole:latest
+ExecStop=/usr/bin/docker stop pihole
