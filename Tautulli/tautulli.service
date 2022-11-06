@@ -16,7 +16,7 @@ ExecStartPre=/usr/bin/docker pull tautulli/tautulli
 ExecStart=/usr/bin/docker run \
 	--name tautulli \
 	--rm \
-	-e TZ="America/New_York" \
+	-e TZ="America/Chicago" \
 	-e PUID=1026 \
 	-e PGID=1000 \
 	-p 8181:8181 \
