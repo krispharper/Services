@@ -14,7 +14,7 @@ RestartSec=2
 TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill radarr
 ExecStartPre=-/usr/bin/docker rm radarr
-ExecStartPre=/usr/bin/docker pull linuxserver/radarr:128
+ExecStartPre=/usr/bin/docker pull linuxserver/radarr
 ExecStart=/usr/bin/docker run \
 	--name radarr \
 	--rm \
@@ -25,5 +25,5 @@ ExecStart=/usr/bin/docker run \
 	-v /media/Poseidon/Data/radarr:/config \
 	-v /media/Poseidon/Movies:/movies \
 	-v /media/Poseidon/Downloads/Incomplete:/downloads \
-	linuxserver/radarr:128
+	linuxserver/radarr
 ExecStop=/usr/bin/docker stop radarr
