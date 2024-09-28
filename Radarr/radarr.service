@@ -22,7 +22,7 @@ ExecStart=/usr/bin/docker run \
 	-e PUID=1026 \
 	-e PGID=100 \
 	-v /etc/localtime:/etc/localtime:ro \
-	-v /media/Poseidon/Data/radarr:/config \
+	-v /data/radarr:/config \
 	-v /media/Poseidon/Movies:/movies \
 	-v /media/Poseidon/Downloads/Incomplete:/downloads \
 	linuxserver/radarr
