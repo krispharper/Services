@@ -21,6 +21,7 @@ ExecStart=/usr/bin/docker run \
 	--link vpn:radarr \
 	--link vpn:overseerr \
 	--link jackett:jackett \
+	--link flare_solverr:flare_solverr \
 	-p 80:80 \
 	-p 443:443 \
 	krispharper/nginx:artemis
