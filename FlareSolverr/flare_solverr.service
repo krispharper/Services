@@ -1,0 +1,22 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=FlareSolverr
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=2
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill flare_solverr
+ExecStartPre=-/usr/bin/docker rm flare_solverr
+ExecStartPre=/usr/bin/docker pull ghcr.io/flaresolverr/flaresolverr:latest
+ExecStart=/usr/bin/docker run \
+    --name flare_solverr \
+    --rm \
+    -e LOG_LEVEL=info \
+    -p 8191:8191 \
+    ghcr.io/flaresolverr/flaresolverr:latest
+ExecStop=/usr/bin/docker stop flare_solverr
