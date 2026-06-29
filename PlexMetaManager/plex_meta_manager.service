@@ -1,0 +1,21 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=Plex Meta Manager
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=on-failure
+RestartSec=2
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill plex-meta-manager
+ExecStartPre=-/usr/bin/docker rm plex-meta-manager
+ExecStartPre=/usr/bin/docker pull meisnate12/plex-meta-manager
+ExecStart=/usr/bin/docker run \
+    --name plex-meta-manager \
+    --rm \
+    -v /media/Poseidon/Data/plex-meta-manager:/config \
+    meisnate12/plex-meta-manager
+ExecStop=/usr/bin/docker stop plex-meta-manager
